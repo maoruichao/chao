@@ -1,0 +1,233 @@
+#include <iostream>
+#include <time.h>
+#include <stdio.h>
+#include <omp.h>
+
+int main(){
+    int start = 2;
+    int end = 100000;
+
+    int i;
+    int j;
+
+    double t0, t1;
+
+    t0 = omp_get_wtime();
+    
+    FILE *fp = NULL;
+    fp = fopen("2_serial.txt", "w");
+    int num;
+    for(i = 2; i <= end; i++){
+        int num = 0;
+        for(j = 1; j <= i; j++){
+            if(i % j == 0)
+                num += 1;
+        }
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+
+    t1 = omp_get_wtime();
+    double serial_time = (double)(t1 - t0);
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_1.txt", "w");
+    #pragma omp parallel num_threads(1)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        //#pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_1 = (double)(t1 - t0);
+
+    double time_mul_1 = serial_time / parellel_time_1;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_2.txt", "w");
+    #pragma omp parallel num_threads(2)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_2 = (double)(t1 - t0);
+
+    double time_mul_2 = serial_time / parellel_time_2;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_3.txt", "w");
+    #pragma omp parallel num_threads(3)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_3 = (double)(t1 - t0);
+
+    double time_mul_3 = serial_time / parellel_time_3;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_4.txt", "w");
+    #pragma omp parallel num_threads(4)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_4 = (double)(t1 - t0);
+
+    double time_mul_4 = serial_time / parellel_time_4;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_5.txt", "w");
+    #pragma omp parallel num_threads(5)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_5 = (double)(t1 - t0);
+
+    double time_mul_5 = serial_time / parellel_time_5;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_6.txt", "w");
+    #pragma omp parallel num_threads(6)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_6 = (double)(t1 - t0);
+
+    double time_mul_6 = serial_time / parellel_time_6;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_7.txt", "w");
+    #pragma omp parallel num_threads(7)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_7 = (double)(t1 - t0);
+
+    double time_mul_7 = serial_time / parellel_time_7;
+
+
+    t0 = omp_get_wtime();
+    //FILE *fp = NULL;
+    fp = fopen("2_parellel_8.txt", "w");
+    #pragma omp parallel num_threads(8)
+    #pragma omp parellel for private(num)
+    for(i = 2; i <= end; i++){
+        num = 0;
+        #pragma omp parallel for reduction(+:num)
+        for(j = 1; j <= i; j++)
+            if(i % j == 0)
+                num += 1;
+        
+        if(num <= 2)
+            fprintf(fp, "%d\n", i);
+    }
+    fclose(fp);
+    t1 = omp_get_wtime();
+    double parellel_time_8 = (double)(t1 - t0);
+
+    double time_mul_8 = serial_time / parellel_time_8;
+
+    std::cout << "串行时间：" << serial_time << "s" << std::endl;
+    std::cout << "单核并行时间：" << parellel_time_1 << "s" << std::endl;
+    std::cout << "两核并行时间：" << parellel_time_2 << "s" << std::endl;
+    std::cout << "三核并行时间：" << parellel_time_3 << "s" << std::endl;
+    std::cout << "四核并行时间：" << parellel_time_4 << "s" << std::endl;
+    std::cout << "五核并行时间：" << parellel_time_5 << "s" << std::endl;
+    std::cout << "六核并行时间：" << parellel_time_6 << "s" << std::endl;
+    std::cout << "七核并行时间：" << parellel_time_7 << "s" << std::endl;
+    std::cout << "八核并行时间：" << parellel_time_8 << "s" << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "单核并行加速比" << time_mul_1 << std::endl;
+    std::cout << "两核并行加速比" << time_mul_2 << std::endl;
+    std::cout << "三核并行加速比" << time_mul_3 << std::endl;
+    std::cout << "四核并行加速比" << time_mul_4 << std::endl;
+    std::cout << "五核并行加速比" << time_mul_5 << std::endl;
+    std::cout << "六核并行加速比" << time_mul_6 << std::endl;
+    std::cout << "七核并行加速比" << time_mul_7 << std::endl;
+    std::cout << "八核并行加速比" << time_mul_8 << std::endl;
+
+    return 0; 
+
+}
