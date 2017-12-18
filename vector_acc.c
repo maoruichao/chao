@@ -14,7 +14,7 @@ int main()
         b[i] = i * 2.0;
         
     }
-    #pragma acc parallel for private(i) reduction(+:result)
+    #pragma acc parallel 
     for (i = 0; i < n; i++)
     {
         
