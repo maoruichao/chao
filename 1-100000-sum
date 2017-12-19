@@ -1,0 +1,43 @@
+#include <iostream>
+#include <mpi.h>
+
+int main(int argc, char* argv[])
+{
+    MPI_Status status;
+
+    int range = 100000;
+
+    int core_id;
+    int num_cores;
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &core_id);
+    MPI_Comm_size(MPI_COMM_WORLD, &num_cores);
+
+    int NumPerCore = range / num_cores;
+    int s = core_id * NumPerCore;
+    int e = (core_id + 1) * NumPerCore;
+
+    if(core_id == num_cores - 1)
+        e = range + 1;
+    
+    unsigned long int sum = 0;
+    for(int i = s; i < e; i++)
+        sum += i;
+    
+    if(core_id != 0)
+        MPI_Send(&sum, 1, MPI_INT, 0, 99, MPI_COMM_WORLD);
+    
+    if(core_id == 0){
+        unsigned long int other_sum;
+        for(int source = 1; source < num_cores; source ++)
+        {
+            MPI_Recv(&other_sum, 1, MPI_INT, source, 99, MPI_COMM_WORLD, &status);
+            sum += other_sum;
+        }
+    std::cout << "1到" << range << "的和是：" << sum << std::endl;
+    }
+
+    MPI_Finalize();
+    return 0;
+}
